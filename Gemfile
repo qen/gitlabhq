@@ -1,4 +1,5 @@
 source "https://rubygems.org"
+ruby '2.0.0'
 
 def darwin_only(require_as)
   RUBY_PLATFORM.include?('darwin') && require_as
@@ -8,7 +9,7 @@ def linux_only(require_as)
   RUBY_PLATFORM.include?('linux') && require_as
 end
 
-gem "rails", "3.2.13"
+gem "rails", "3.2.15"
 
 # Supported DBs
 gem "mysql2", group: :mysql
