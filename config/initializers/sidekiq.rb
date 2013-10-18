@@ -1,3 +1,4 @@
+
 # Custom Redis configuration
 config_file = Rails.root.join('config', 'resque.yml')
 
