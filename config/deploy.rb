@@ -14,7 +14,7 @@ role :web, "kagebunshin"
 role :app, "kagebunshin" # this can be the same as the web server
 role :db,  "amateratsu", :primary => true # this can be the same as the web server
 
-set :rvm_version,   "ruby-2.0.0-p247"
+set :ruby_version,  "ruby-2.0.0-p247"
 set :rvm_gemset,    "smartph_gitlab"
 #set :rvm_bin,       'rvm'
 #set :rvm_bin,       '/usr/local/rvm/bin/rvm'
@@ -139,9 +139,8 @@ after "deploy:setup" do
   #commands << "[ -s #{shared_path}/.rvmrc ] && #{rvm} rvmrc trust #{shared_path}"
   #commands << "[ -s #{shared_path}/.rvmrc ] && #{rvm} rvmrc trust #{deploy_to}"
   commands << "#{rvm} install #{ruby_version}"
-  commands << "#{rvm} use #{ruby_version}@#{rvm_gemset} --create"
   commands << "rm .rvmrc"
-  commands << "#{rvm} use #{ruby_version}@#{rvm_gemset} rvmrc create"
+  commands << "#{rvm} use #{ruby_version}@#{rvm_gemset} --create"
   commands << "cd #{deploy_to} "
   commands << "ln -sf #{shared_path}/.rvmrc #{deploy_to}/.rvmrc"
   #commands << "[ -s #{shared_path}/.rvmrc ] && #{rvm} rvmrc trust #{deploy_to}"
@@ -150,7 +149,7 @@ after "deploy:setup" do
   commands << "#{rvm} wrapper #{ruby_version}@#{rvm_gemset} #{rvm_gemset} rake"
 
   run <<-CMD
-    export rvm_trust_rvmrcs_flag=1; cd #{shared_path}; #{commands.join(" && ")}
+    export rvm_trust_rvmrcs_flag=1; cd #{shared_path}; touch .rvmrc; #{commands.join(" && ")}
   CMD
 
   # CREATES RAKE SCRIPT
