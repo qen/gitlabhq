@@ -140,7 +140,7 @@ after "deploy:setup" do
   #commands << "[ -s #{shared_path}/.rvmrc ] && #{rvm} rvmrc trust #{deploy_to}"
   commands << "#{rvm} install #{ruby_version}"
   commands << "rm .rvmrc"
-  commands << "#{rvm} use #{ruby_version}@#{rvm_gemset} --create"
+  commands << "#{rvm} use #{ruby_version}@#{rvm_gemset} --rvmrc --create"
   commands << "cd #{deploy_to} "
   commands << "ln -sf #{shared_path}/.rvmrc #{deploy_to}/.rvmrc"
   #commands << "[ -s #{shared_path}/.rvmrc ] && #{rvm} rvmrc trust #{deploy_to}"
