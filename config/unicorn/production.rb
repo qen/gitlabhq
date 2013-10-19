@@ -22,6 +22,7 @@ worker_processes 8
 # user "unprivileged_user", "unprivileged_group"
 user 'git'
 
+
 # Help ensure your application will always spawn in the symlinked
 # "current" directory that Capistrano sets up.
 working_directory "#{APP_PATH}/current" # available in 0.94.0+
