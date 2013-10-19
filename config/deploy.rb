@@ -36,6 +36,8 @@ set :normal_symlinks, %w(
   tmp
   log
   .rvmrc
+  .bundle
+  vendor/bundle
 )
 
 # need to symlink tmp/restart.txt file to shared folder
@@ -53,6 +55,8 @@ set :shared_folders, %w(
   scripts
   assets
   uploads
+  .bundle
+  vendor/bundle
 )
 
 set :shared_files, %w(
@@ -160,7 +164,7 @@ after "deploy:setup" do
 
   upload "Gemfile", "#{shared_path}", :via => :scp
   #run "cd #{shared_path} && scripts/bundle"
-  run "cd #{shared_path} && #{rvm_gemset}_bundle"
+  run "cd #{shared_path} && #{rvm_gemset}_bundle install  --deployment --without development test mysql puma aws"
 
 end
 
