@@ -20,7 +20,7 @@ worker_processes 8
 # If running the master process as root and the workers as an unprivileged
 # user, do this to switch euid/egid in the workers (also chowns logs):
 # user "unprivileged_user", "unprivileged_group"
-user 'git'
+#user 'git'
 
 
 # Help ensure your application will always spawn in the symlinked
