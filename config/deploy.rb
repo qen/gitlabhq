@@ -7,6 +7,7 @@ set :user,        "deploy"
 set :use_sudo,    false
 
 set :deploy_to,   "/var/www/smartph/gitlab/production"
+set :deploy_via,  :remote_cache
 set :shared_path, "#{deploy_to}/shared"
 
 
@@ -38,6 +39,7 @@ set :normal_symlinks, %w(
   .rvmrc
   .bundle
   vendor/bundle
+  Gemfile.lock
 )
 
 # need to symlink tmp/restart.txt file to shared folder
@@ -80,9 +82,19 @@ set :rsync_exclude_lists, %w(
 )
 
 ################################################################################
-# deployment to different server
+# with_assets
 ################################################################################
 
+desc "rake precompile assets and upload"
+task :with_assets do
+  after "make:symlinks", "make:build_assets_and_upload"
+end
+
+set :build_assets_remotely, false
+task :precompile_assets do
+  #puts ENV.inspect
+  set :build_assets_remotely, true
+end
 
 ################################################################################
 # deploy HOOKS here
@@ -104,9 +116,31 @@ namespace :make do
     # needed for some of the symlinks
     #run "mkdir -p #{current_path}/tmp"
 
+    # build assets remotely
+    commands << "bundle exec rake assets:precompile RAILS_ENV=production" if build_assets_remotely
+
     run <<-CMD
       export rvm_trust_rvmrcs_flag=1; cd #{release_path} && #{commands.join(" && ")}
     CMD
+  end
+
+  # modified version
+  # http://www.kudelabs.com/2012/03/28/rails-3-2-cap-deploy-with-assets
+  task :build_assets_and_upload do
+    run <<-CMD
+      export rvm_trust_rvmrcs_flag=1;
+      rm -rf #{latest_release}/public/assets &&
+      mkdir -p #{shared_path}/assets &&
+      ln -s #{shared_path}/assets #{latest_release}/public/assets
+    CMD
+
+    run_locally "bundle exec rake assets:precompile"
+    run_locally "cd public; tar -zcvf assets.tar.gz assets"
+    top.upload "public/assets.tar.gz", "#{shared_path}", :via => :scp
+    run "cd #{shared_path}; tar -zxvf assets.tar.gz"
+    run_locally "rm public/assets.tar.gz"
+    run_locally "rm -rf public/assets"
+    self
   end
 
 end

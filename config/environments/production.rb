@@ -40,7 +40,8 @@ Gitlab::Application.configure do
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
 
   # Use a different cache store in production
-  config.cache_store = :redis_store
+  redis_url = ENV["GITLAB_REDIS_CACHE_URL"] || 'redis://amateratsu:6379/0' #"redis://127.0.0.1:6379/0"
+  config.cache_store = :redis_store, redis_url #"redis://amateratsu:6379/0"
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"
