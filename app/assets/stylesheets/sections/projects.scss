@@ -7,6 +7,13 @@
   }
 }
 
+.project-name-holder {
+  .help-inline {
+    vertical-align: top;
+    padding: 7px;
+  }
+}
+
 .project_clone_panel {
   @include border-radius(4px);
   @include bg-gray-gradient;
@@ -26,6 +33,12 @@
     box-shadow: none;
     margin-left: -1px;
     background: #FFF;
+  }
+}
+
+.project-public-holder {
+  .help-inline {
+    padding-top: 7px;
   }
 }
 

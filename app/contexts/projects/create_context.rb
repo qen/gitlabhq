@@ -16,8 +16,9 @@ module Projects
         wiki_enabled: default_features.wiki,
         wall_enabled: default_features.wall,
         snippets_enabled: default_features.snippets,
-        merge_requests_enabled: default_features.merge_requests
-      }
+        merge_requests_enabled: default_features.merge_requests,
+        public: default_features.public
+      }.stringify_keys
 
       @project = Project.new(default_opts.merge(params))
 
@@ -26,7 +27,7 @@ module Projects
       # Ex.
       #  'GitLab HQ'.parameterize => "gitlab-hq"
       #
-      @project.path = @project.name.dup.parameterize
+      @project.path = @project.name.dup.parameterize unless @project.path.present?
 
 
       if namespace_id

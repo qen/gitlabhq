@@ -9,6 +9,8 @@ coverage/*
 backups/*
 *.swp
 public/uploads/
+.ruby-version
+.ruby-gemset
 .rvmrc
 .rbenv-version
 .directory
@@ -19,7 +21,6 @@ config/gitlab.yml
 config/database.yml
 config/initializers/omniauth.rb
 config/unicorn.rb
-config/puma.rb
 config/resque.yml
 config/aws.yml
 db/data.yml

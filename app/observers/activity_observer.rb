@@ -5,8 +5,8 @@ class ActivityObserver < BaseObserver
     event_author_id = record.author_id
 
     if record.kind_of?(Note)
-      # Skip system status notes like 'status changed to close'
-      return true if record.note.include?("_Status changed to ")
+      # Skip system notes, like status changes and cross-references.
+      return true if record.system?
 
       # Skip wall notes to prevent spamming of dashboard
       return true if record.noteable_type.blank?
@@ -29,11 +29,11 @@ class ActivityObserver < BaseObserver
 
   def create_event(record, status)
     Event.create(
-        project: record.project,
-        target_id: record.id,
-        target_type: record.class.name,
-        action: status,
-        author_id: record.author_id
+      project: record.project,
+      target_id: record.id,
+      target_type: record.class.name,
+      action: status,
+      author_id: current_user.id
     )
   end
 end

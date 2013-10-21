@@ -1,5 +1,34 @@
+v 6.1.0
+  - Project specific IDs for issues, mr, milestones
+    Above items will get a new id and for example all bookmarked issue urls will change.
+    Old issue urls are redirected to the new one if the issue id is too high for an internal id.
+  - Description field added to Merge Request
+  - API: Sudo api calls (Izaak Alpert)
+  - API: Group membership api (Izaak Alpert)
+  - Improved commit diff
+  - Improved large commit handling (Boyan Tabakov)
+  - Rewrite: Init script now less prone to errors and keeps better track of the service (Rovanion Luckey)
+  - Link issues, merge requests, and commits when they reference each other with GFM (Ash Wilson)
+  - Close issues automatically when pushing commits with a special message
+  - Improve user removal from admin area
+  - Invalidate events cache when project was moved
+  - Remove deprecated classes and rake tasks
+  - Add event filter for group and project show pages
+  - Add links to create branch/tag from project home page
+  - Add public-project? checkbox to new-project view
+  - Improved compare page. Added link to proceed into Merge Request
+  - Send email to user when he was added to group
+  - New landing page when you have 0 projects
+
 v 6.0.0
   - Feature: Replace teams with group membership
+    We introduce group membership in 6.0 as a replacement for teams.
+    The old combination of groups and teams was confusing for a lot of people.
+    And when the members of a team where changed this wasn't reflected in the project permissions.
+    In GitLab 6.0 you will be able to add members to a group with a permission level for each member.
+    These group members will have access to the projects in that group.
+    Any changes to group members will immediately be reflected in the project permissions.
+    You can even have multiple owners for a group, greatly simplifying administration.
   - Feature: Ability to have multiple owners for group
   - Feature: Merge Requests between fork and project (Izaak Alpert)
   - Feature: Generate fingerprint for ssh keys
@@ -24,7 +53,7 @@ v 6.0.0
   - Move all project controllers/views under Projects:: module
   - Move all profile controllers/views under Profiles:: module
   - Apply user project limit only for personal projects
-  - Unicorn is default web server for new installations
+  - Unicorn is default web server again
   - Store satellites lock files inside satellites dir
   - Disabled threadsafety mode in rails
   - Fixed bug with loosing MR comments
@@ -47,7 +76,7 @@ v 5.4.0
   - Notify mentioned users with email
 
 v 5.3.0
-  - Refactored services 
+  - Refactored services
   - Campfire service added
   - HipChat service added
   - Fixed bug with LDAP + git over http
