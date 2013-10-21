@@ -5,7 +5,7 @@ APP_ROOT  = APP_PATH + '/current'
 God.watch do |w|
   # rvm wrapper ruby-1.8.7-p334@smart_ph smart_ bundle
   w.name      = "smartph_gitlab_sidekiq"
-  w.start     = "smartph_gitlab_bundle exec sidekiq -e production -L #{APP_PATH}/shared/log/sidekiq.log"
+  w.start     = "smartph_gitlab_bundle exec sidekiq -q post_receive,mailer,system_hook,project_web_hook,gitlab_shell,common,default -e production -L #{APP_PATH}/shared/log/sidekiq.log"
   #w.pid_file  = File.join(APP_PATH, "/shared/pids/sidekiq_production.pid")
   w.start_grace   = 30.seconds
   w.restart_grace = 30.seconds
